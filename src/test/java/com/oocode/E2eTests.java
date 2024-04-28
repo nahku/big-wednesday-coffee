@@ -115,6 +115,23 @@ public class E2eTests {
         assertThat(output, equalTo(expectedOutput));
     }
 
+    @Test
+    public void canFindMaximumWaveHeightFromOriginalQueenslandData() throws Exception {
+        String input = Files.readString(Paths.get("src/test/resources/queensland_test_data.csv"));
+
+        startLocalServerPretendingToBeQueenslandApi(input);
+
+        String url = "http://localhost:8123";
+        LocalDate date = LocalDate.of(2024, Month.APRIL, 28);
+
+        String expectedOutput = "<html><body>You should have been at Wide Bay on Monday - it was gnarly - waves up to 7.660m!</body></html>";
+        Main.main(new String[]{url, date.toString()});
+
+        String output = Files.readString(Paths.get("index.html"), StandardCharsets.UTF_8);
+
+        assertThat(output, equalTo(expectedOutput));
+    }
+
     @BeforeEach
     public void deletePreviousOutputIfItExists() {
         // Deletes the (potential) previous output to have a clean test
