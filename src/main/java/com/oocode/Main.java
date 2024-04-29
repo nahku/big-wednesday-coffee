@@ -33,27 +33,32 @@ public class Main {
   private static void createPage(String url, LocalDate today, HttpClient httpClient) throws Exception {
     String response = httpClient.readUrl(url);
 
-    String[] output = generateOutput(response);
+    WaveInfo extractedWaveInfo = extractWaveInfo(response);
 
-    writeHtml(output);
+    writeHtml(extractedWaveInfo);
   }
 
-  private static void writeHtml(String[] strings) throws IOException {
+  private static void writeHtml(WaveInfo waveInfo) throws IOException {
     try (FileWriter myWriter = new FileWriter("index.html")) {
-      LocalDateTime foo = LocalDateTime.ofEpochSecond(parseInt(strings[2]), 0, ZoneOffset.ofHours(10));
+      String maxWaveSizeFormatted = String.format(Locale.ENGLISH, "%.3f", waveInfo.maxWaveSize());
+      String dateFormatted = waveInfo.date().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+
       myWriter.write(
           String.format("<html><body>You should have been at %s on %s - it was gnarly - waves up to %sm!</body></html>",
-              strings[0], foo.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH), strings[7]));
+              waveInfo.location(), dateFormatted, maxWaveSizeFormatted));
     }
   }
 
-  private static String [] generateOutput(String response) throws IOException, CsvException {
+  private static WaveInfo extractWaveInfo(String response) throws IOException, CsvException {
     List<String[]> result;
     try (CSVReader reader = new CSVReader(new StringReader(response))) {
       result = reader.readAll().stream().skip(2).collect(toList());
     }
     String[] strings = result.stream().max(comparing(o -> Double.valueOf(o[7]))).orElse(null);
-    return strings;
+
+    LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(strings[2]), 0, ZoneOffset.ofHours(10));
+
+    return new WaveInfo(strings[0], date, Double.parseDouble(strings[7]));
   }
 }
 
