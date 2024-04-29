@@ -1,14 +1,12 @@
 package com.oocode;
 
+import com.oocode.fakes.FakeQueenslandApiServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import io.fusionauth.http.server.HTTPHandler;
-import io.fusionauth.http.server.HTTPListenerConfiguration;
-import io.fusionauth.http.server.HTTPServer;
+
 
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,11 +19,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class E2eTests {
 
-    private HTTPServer server;
+    FakeQueenslandApiServer server;
 
     @Test
     public void canFindMaximumWaveHeightFromQueenslandDataSingleLocation() throws Exception {
-        startLocalServerPretendingToBeQueenslandApi("""
+        server.startLocalServerPretendingToBeQueenslandApi("""
                     Wave Data provided @ 02:15hrs on 28-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
@@ -47,7 +45,7 @@ public class E2eTests {
 
     @Test
     public void canFindMaximumWaveHeightFromQueenslandDataMultipleLocations() throws Exception {
-        startLocalServerPretendingToBeQueenslandApi("""
+        server.startLocalServerPretendingToBeQueenslandApi("""
                     Wave Data provided @ 02:15hrs on 28-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
@@ -68,7 +66,7 @@ public class E2eTests {
     @Test
     public void canFindMaximumWaveHeightFromQueenslandDataSimilarHeight() throws Exception {
         // Tests if correct height is returned if height difference is small
-        startLocalServerPretendingToBeQueenslandApi("""
+        server.startLocalServerPretendingToBeQueenslandApi("""
                     Wave Data provided @ 02:15hrs on 28-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.171,10.530,4.040,24.70,75.90,-99.90,-99.90
@@ -95,7 +93,7 @@ public class E2eTests {
         Serves also as documentation that in that case the first location is returned.
          */
 
-        startLocalServerPretendingToBeQueenslandApi("""
+        server.startLocalServerPretendingToBeQueenslandApi("""
                     Wave Data provided @ 02:15hrs on 28-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Location D,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.2,10.530,4.040,24.70,75.90,-99.90,-99.90
@@ -119,7 +117,7 @@ public class E2eTests {
     public void canFindMaximumWaveHeightFromOriginalQueenslandData() throws Exception {
         String input = Files.readString(Paths.get("src/test/resources/queensland_test_data.csv"));
 
-        startLocalServerPretendingToBeQueenslandApi(input);
+        server.startLocalServerPretendingToBeQueenslandApi(input);
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2024, Month.APRIL, 28);
@@ -145,19 +143,13 @@ public class E2eTests {
         }
     }
 
-    public void startLocalServerPretendingToBeQueenslandApi(String response) {
-        HTTPHandler handler = (req, res) -> {
-            try (Writer writer = res.getWriter()) {
-                writer.write(response);
-            }
-        };
-
-        server = new HTTPServer().withHandler(handler).withListener(new HTTPListenerConfiguration(8123));
-        server.start();
+    @BeforeEach
+    public void setServer() {
+        server = new FakeQueenslandApiServer();
     }
 
     @AfterEach
     public void stopLocalServerPretendingToBeNationalGridEso() {
-        server.close();
+        server.stopLocalServerPretendingToBeQueenslandApi();
     }
 }

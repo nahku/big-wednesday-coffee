@@ -1,0 +1,33 @@
+package com.oocode;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
+import java.io.IOException;
+
+public class BasicHttpClient implements HttpClient {
+
+    private OkHttpClient okHttpClient;
+
+    public BasicHttpClient() {
+        okHttpClient = new OkHttpClient();
+    }
+
+    public String readUrl(String url){
+        Request request = new Request.Builder().url(url).build();
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                ResponseBody rb = response.body();
+                return rb.string();
+            }
+            else{
+               return null;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Reading url failed: " + url, e);
+        }
+    }
+
+}
