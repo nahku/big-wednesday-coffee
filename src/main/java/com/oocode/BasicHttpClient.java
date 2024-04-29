@@ -23,7 +23,7 @@ public class BasicHttpClient implements HttpClient {
                 return rb.string();
             }
             else{
-               return null;
+                throw new RuntimeException("Reading url failed: " + url + ". Error code: " + response.code());
             }
         } catch (IOException e) {
             throw new RuntimeException("Reading url failed: " + url, e);

@@ -57,6 +57,17 @@ public class BasicHttpClientTest {
 
     }
 
+    @Test
+    public void throwsExceptionOnServerError() {
+        server.startLocalServerPretendingToBeQueenslandApiReturningAnInternalError();
+
+        BasicHttpClient client = new BasicHttpClient();
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> client.readUrl("http://localhost:8123"));
+        assertEquals("Reading url failed: http://localhost:8123. Error code: 500", exception.getMessage());
+
+    }
+
     @BeforeEach
     public void setServer() {
         server = new FakeQueenslandApiServer();

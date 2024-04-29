@@ -21,6 +21,15 @@ public class FakeQueenslandApiServer {
         server.start();
     }
 
+    public void startLocalServerPretendingToBeQueenslandApiReturningAnInternalError() {
+        HTTPHandler handler = (req, res) -> {
+            res.setStatus(500);
+        };
+
+        server = new HTTPServer().withHandler(handler).withListener(new HTTPListenerConfiguration(8123));
+        server.start();
+    }
+
     public void stopLocalServerPretendingToBeQueenslandApi() {
         server.close();
     }
