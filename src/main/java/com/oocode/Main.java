@@ -40,12 +40,11 @@ public class Main {
 
   private static void writeHtml(WaveInfo waveInfo) throws IOException {
     try (FileWriter myWriter = new FileWriter("index.html")) {
-      String maxWaveSizeFormatted = String.format(Locale.ENGLISH, "%.3f", waveInfo.maxWaveSize());
       String dateFormatted = waveInfo.date().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
 
       myWriter.write(
           String.format("<html><body>You should have been at %s on %s - it was gnarly - waves up to %sm!</body></html>",
-              waveInfo.location(), dateFormatted, maxWaveSizeFormatted));
+              waveInfo.location(), dateFormatted, waveInfo.maxWaveSize()));
     }
   }
 
@@ -58,7 +57,7 @@ public class Main {
 
     LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(strings[2]), 0, ZoneOffset.ofHours(10));
 
-    return new WaveInfo(strings[0], date, Double.parseDouble(strings[7]));
+    return new WaveInfo(strings[0], date, strings[7]);
   }
 }
 
