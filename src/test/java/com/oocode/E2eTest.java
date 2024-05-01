@@ -17,7 +17,7 @@ import java.time.Month;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class E2eTests {
+public class E2eTest {
 
     FakeQueenslandApiServer server;
 
