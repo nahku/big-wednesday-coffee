@@ -29,7 +29,7 @@ public class Main {
   private static void createPage(String url, LocalDate today, HttpClient httpClient) throws Exception {
 
     String waveCsvData = httpClient.readUrl(url);
-    WaveInfo extractedWaveInfo = extractWaveInfo(waveCsvData);
+    WaveInfo extractedWaveInfo = WaveInfoExtractor.extractWaveInfo(waveCsvData);
     String generatedHtml = WaveInfoHtmlGenerator.generateHtmlFromWaveInfo(extractedWaveInfo);
     writeHtmlToFile(generatedHtml);
   }
@@ -40,15 +40,6 @@ public class Main {
     myWriter.close();
   }
 
-  private static WaveInfo extractWaveInfo(String waveCsvData) throws IOException, CsvException {
-    List<String[]> result;
-    CSVReader reader = new CSVReader(new StringReader(waveCsvData));
-    result = reader.readAll().stream().skip(2).toList();
-    String[] strings = result.stream().max(comparing(o -> Double.valueOf(o[7]))).orElse(null);
 
-    LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(strings[2]), 0, ZoneOffset.ofHours(10));
-
-    return new WaveInfo(strings[0], date, strings[7]);
-  }
 }
 
