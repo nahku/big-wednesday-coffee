@@ -1,18 +1,8 @@
 package com.oocode;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
-
-import static java.lang.Integer.parseInt;
-import static java.util.Comparator.comparing;
 
 public class Main {
   public static void main(String[] args) throws Exception {

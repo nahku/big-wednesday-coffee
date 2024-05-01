@@ -54,7 +54,6 @@ public class BasicHttpClientTest {
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> client.readUrl(imaginaryUrl));
         assertEquals("Reading url failed: " + imaginaryUrl, exception.getMessage());
-
     }
 
     @Test
