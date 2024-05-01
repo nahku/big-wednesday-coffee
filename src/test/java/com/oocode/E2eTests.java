@@ -131,8 +131,9 @@ public class E2eTests {
     }
 
     @BeforeEach
-    public void deletePreviousOutputIfItExists() {
-        // Deletes the (potential) previous output to have a clean test
+    @AfterEach
+    public void deleteOutputIfItExists() {
+        // Deletes the (potential) previous output to have a clean test environment
         Path path = Paths.get("index.html");
         if (Files.exists(path)) {
             try {
@@ -152,4 +153,5 @@ public class E2eTests {
     public void stopLocalServerPretendingToBeNationalGridEso() {
         server.stopLocalServerPretendingToBeQueenslandApi();
     }
+
 }
