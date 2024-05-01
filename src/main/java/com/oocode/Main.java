@@ -30,11 +30,11 @@ public class Main {
 
     String waveCsvData = httpClient.readUrl(url);
     WaveInfo extractedWaveInfo = extractWaveInfo(waveCsvData);
-    String generatedHtml = HtmlGenerator.generateHtmlFromWaveInfo(extractedWaveInfo);
-    writeHtml(generatedHtml);
+    String generatedHtml = WaveInfoHtmlGenerator.generateHtmlFromWaveInfo(extractedWaveInfo);
+    writeHtmlToFile(generatedHtml);
   }
 
-  private static void writeHtml(String htmlContent) throws IOException {
+  private static void writeHtmlToFile(String htmlContent) throws IOException {
     FileWriter myWriter = new FileWriter("index.html");
     myWriter.write(htmlContent);
     myWriter.close();

@@ -3,7 +3,7 @@ package com.oocode;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class HtmlGenerator {
+public class WaveInfoHtmlGenerator {
 
     public static String generateHtmlFromWaveInfo(WaveInfo waveInfo) {
 

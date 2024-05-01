@@ -8,7 +8,7 @@ import java.time.Month;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class HtmlGeneratorTest {
+public class WaveInfoHtmlGeneratorTest {
 
     @Test
     public void returnsFormattedHtmlForWaveDataInput() {
@@ -16,7 +16,7 @@ public class HtmlGeneratorTest {
 
         String expectedResult = "<html><body>You should have been at Location A on Wednesday - it was gnarly - waves up to 5.000m!</body></html>";
 
-        String response = HtmlGenerator.generateHtmlFromWaveInfo(waveInfo);
+        String response = WaveInfoHtmlGenerator.generateHtmlFromWaveInfo(waveInfo);
 
         assertThat(response, equalTo(expectedResult));
     }
@@ -27,7 +27,7 @@ public class HtmlGeneratorTest {
 
         String expectedResult = "<html><body>You should have been at Location C on Monday - it was gnarly - waves up to 10.000m!</body></html>";
 
-        String response = HtmlGenerator.generateHtmlFromWaveInfo(waveInfo);
+        String response = WaveInfoHtmlGenerator.generateHtmlFromWaveInfo(waveInfo);
 
         assertThat(response, equalTo(expectedResult));
     }
