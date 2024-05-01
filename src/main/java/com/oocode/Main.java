@@ -28,16 +28,16 @@ public class Main {
 
   private static void createPage(String url, LocalDate today, HttpClient httpClient) throws Exception {
 
-    String response = httpClient.readUrl(url);
-    WaveInfo extractedWaveInfo = extractWaveInfo(response);
+    String waveCsvData = httpClient.readUrl(url);
+    WaveInfo extractedWaveInfo = extractWaveInfo(waveCsvData);
     String generatedHtml = HtmlGenerator.generateHtmlFromWaveInfo(extractedWaveInfo);
     writeHtml(generatedHtml);
   }
 
   private static void writeHtml(String htmlContent) throws IOException {
-    try (FileWriter myWriter = new FileWriter("index.html")){
+    FileWriter myWriter = new FileWriter("index.html");
     myWriter.write(htmlContent);
-    }
+    myWriter.close();
   }
 
   private static WaveInfo extractWaveInfo(String waveCsvData) throws IOException, CsvException {
