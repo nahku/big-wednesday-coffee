@@ -133,15 +133,7 @@ public class E2eTest {
     @BeforeEach
     @AfterEach
     public void deleteOutputIfItExists() {
-        // Deletes the (potential) previous output to have a clean test environment
-        Path path = Paths.get("index.html");
-        if (Files.exists(path)) {
-            try {
-                Files.delete(path);
-            } catch (IOException e) {
-                throw new RuntimeException("Could not delete old index.html.", e);
-            }
-        }
+        FileHandlingHelper.deleteFileIfItExists("index.html");
     }
 
     @BeforeEach

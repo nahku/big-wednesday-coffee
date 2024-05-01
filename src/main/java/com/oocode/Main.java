@@ -1,7 +1,5 @@
 package com.oocode;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
@@ -21,15 +19,8 @@ public class Main {
     String waveCsvData = httpClient.readUrl(url);
     WaveInfo extractedWaveInfo = WaveInfoExtractor.extractWaveInfo(waveCsvData);
     String generatedHtml = WaveInfoHtmlGenerator.generateHtmlFromWaveInfo(extractedWaveInfo);
-    writeHtmlToFile(generatedHtml);
+    FileWriter.writeToFile(generatedHtml, "index.html");
   }
-
-  private static void writeHtmlToFile(String htmlContent) throws IOException {
-    FileWriter myWriter = new FileWriter("index.html");
-    myWriter.write(htmlContent);
-    myWriter.close();
-  }
-
 
 }
 
