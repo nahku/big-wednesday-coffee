@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class SurfConditionsExtractorTest {
 
     @Test
-    public void canExtractCorrectWaveInfo() {
+    public void canExtractCorrectSurfConditions() {
 
         SurfConditions expectedSurfConditions = new SurfConditions(
                 "Location A",
@@ -27,7 +27,7 @@ public class SurfConditionsExtractorTest {
     }
 
     @Test
-    public void canExtractCorrectWaveInfoDifferentLocation() {
+    public void canExtractCorrectSurfConditionsDifferentLocation() {
 
         SurfConditions expectedSurfConditions = new SurfConditions(
                 "Location A",
