@@ -18,8 +18,8 @@ public class Main {
 
     String waveCsvData = httpClient.readUrl(url);
     ApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
-    WaveInfo extractedWaveInfo = WaveInfoExtractor.extractWaveInfo(waveData);
-    String generatedHtml = WaveInfoHtmlGenerator.generateHtmlFromWaveInfo(extractedWaveInfo);
+    SurfConditions extractedSurfConditions = SurfConditionsExtractor.extractWaveInfo(waveData);
+    String generatedHtml = SurfConditionsHtmlGenerator.generateHtmlFromWaveInfo(extractedSurfConditions);
     FileWriter.writeToFile(generatedHtml, "index.html");
   }
 

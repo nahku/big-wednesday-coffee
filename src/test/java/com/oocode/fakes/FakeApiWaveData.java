@@ -1,7 +1,7 @@
 package com.oocode.fakes;
 
 import com.oocode.ApiWaveData;
-import com.oocode.WaveInfo;
+import com.oocode.SurfConditions;
 
 /*
  Fakes an instance of the ApiWaveData interface.
@@ -9,14 +9,14 @@ import com.oocode.WaveInfo;
  */
 public class FakeApiWaveData implements ApiWaveData {
 
-    private final WaveInfo waveInfo;
+    private final SurfConditions surfConditions;
 
-    public FakeApiWaveData(WaveInfo waveInfo){
-        this.waveInfo = waveInfo;
+    public FakeApiWaveData(SurfConditions surfConditions){
+        this.surfConditions = surfConditions;
     }
 
     @Override
-    public WaveInfo getMaxWaveInfo() {
-        return waveInfo;
+    public SurfConditions getMaxWaveInfo() {
+        return surfConditions;
     }
 }

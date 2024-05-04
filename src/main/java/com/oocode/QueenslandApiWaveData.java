@@ -32,12 +32,12 @@ public class QueenslandApiWaveData implements ApiWaveData {
         }
     }
 
-    public WaveInfo getMaxWaveInfo() {
+    public SurfConditions getMaxWaveInfo() {
         String[] maxWaveSizeRow = getRowWithMaxWaveSize();
 
         LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(maxWaveSizeRow[2]), 0, ZoneOffset.ofHours(10));
 
-        return new WaveInfo(maxWaveSizeRow[0], date, maxWaveSizeRow[7]);
+        return new SurfConditions(maxWaveSizeRow[0], date, maxWaveSizeRow[7]);
     }
 
     private static List<String[]> skipHeader(List<String[]> csvRows){
