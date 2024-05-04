@@ -16,7 +16,7 @@ public class SurfConditionsHtmlGeneratorTest {
 
         String expectedResult = "<html><body>You should have been at Location A on Wednesday - it was gnarly - waves up to 5.000m!</body></html>";
 
-        String response = SurfConditionsHtmlGenerator.generateHtmlFromWaveInfo(surfConditions);
+        String response = SurfConditionsHtmlGenerator.generateHtmlFromSurfConditions(surfConditions);
 
         assertThat(response, equalTo(expectedResult));
     }
@@ -27,7 +27,7 @@ public class SurfConditionsHtmlGeneratorTest {
 
         String expectedResult = "<html><body>You should have been at Location C on Monday - it was gnarly - waves up to 10.000m!</body></html>";
 
-        String response = SurfConditionsHtmlGenerator.generateHtmlFromWaveInfo(surfConditions);
+        String response = SurfConditionsHtmlGenerator.generateHtmlFromSurfConditions(surfConditions);
 
         assertThat(response, equalTo(expectedResult));
     }

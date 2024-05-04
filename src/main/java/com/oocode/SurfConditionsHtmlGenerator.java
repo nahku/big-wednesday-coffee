@@ -2,7 +2,7 @@ package com.oocode;
 
 public class SurfConditionsHtmlGenerator {
 
-    public static String generateHtmlFromWaveInfo(SurfConditions surfConditions) {
+    public static String generateHtmlFromSurfConditions(SurfConditions surfConditions) {
 
         String dayOfWeek = surfConditions.getDayOfWeek();
 

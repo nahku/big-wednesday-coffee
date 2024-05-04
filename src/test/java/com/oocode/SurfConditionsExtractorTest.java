@@ -21,7 +21,7 @@ public class SurfConditionsExtractorTest {
 
         WaveData waveData = new FakeWaveData(expectedSurfConditions);
 
-        assertThat(SurfConditionsExtractor.extractWaveInfo(waveData), equalTo(expectedSurfConditions));
+        assertThat(SurfConditionsExtractor.extractSurfConditions(waveData), equalTo(expectedSurfConditions));
     }
 
     @Test
@@ -34,6 +34,6 @@ public class SurfConditionsExtractorTest {
 
         WaveData waveData = new FakeWaveData(expectedSurfConditions);
 
-        assertThat(SurfConditionsExtractor.extractWaveInfo(waveData), equalTo(expectedSurfConditions));
+        assertThat(SurfConditionsExtractor.extractSurfConditions(waveData), equalTo(expectedSurfConditions));
     }
 }
