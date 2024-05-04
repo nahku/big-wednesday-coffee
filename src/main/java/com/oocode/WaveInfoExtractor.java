@@ -28,6 +28,7 @@ public class WaveInfoExtractor {
 
             String[] strings = filteredResult.stream().max(comparing(o -> Double.valueOf(o[7]))).orElse(null);
             LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(strings[2]), 0, ZoneOffset.ofHours(10));
+
             return new WaveInfo(strings[0], date, strings[7]);
         } catch (Exception e) {
             throw new RuntimeException("Failed to extract wave information from input.", e);

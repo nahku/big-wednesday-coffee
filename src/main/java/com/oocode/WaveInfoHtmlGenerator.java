@@ -7,12 +7,12 @@ public class WaveInfoHtmlGenerator {
 
     public static String generateHtmlFromWaveInfo(WaveInfo waveInfo) {
 
-        String dateFormatted = waveInfo.date().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        String dayOfWeek = waveInfo.getDayOfWeek();
 
         return String.format(
                     "<html><body>You should have been at %s on %s - it was gnarly - waves up to %sm!</body></html>",
                     waveInfo.location(),
-                    dateFormatted,
+                    dayOfWeek,
                     waveInfo.maxWaveSize());
     }
 }
