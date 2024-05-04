@@ -17,7 +17,7 @@ public class Main {
   private static void createPage(String url, LocalDate today, HttpClient httpClient) {
 
     String waveCsvData = httpClient.readUrl(url);
-    ApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
+    WaveData waveData = new QueenslandApiWaveData(waveCsvData);
     SurfConditions extractedSurfConditions = SurfConditionsExtractor.extractWaveInfo(waveData);
     String generatedHtml = SurfConditionsHtmlGenerator.generateHtmlFromWaveInfo(extractedSurfConditions);
     FileWriter.writeToFile(generatedHtml, "index.html");

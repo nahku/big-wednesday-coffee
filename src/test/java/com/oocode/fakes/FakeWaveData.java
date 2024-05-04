@@ -1,22 +1,22 @@
 package com.oocode.fakes;
 
-import com.oocode.ApiWaveData;
+import com.oocode.WaveData;
 import com.oocode.SurfConditions;
 
 /*
  Fakes an instance of the ApiWaveData interface.
  Used to test that the WaveInfoExtractor extracts the correct WaveInfo.
  */
-public class FakeApiWaveData implements ApiWaveData {
+public class FakeWaveData implements WaveData {
 
     private final SurfConditions surfConditions;
 
-    public FakeApiWaveData(SurfConditions surfConditions){
+    public FakeWaveData(SurfConditions surfConditions){
         this.surfConditions = surfConditions;
     }
 
     @Override
-    public SurfConditions getMaxWaveInfo() {
+    public SurfConditions getLargestWaveSurfConditions() {
         return surfConditions;
     }
 }

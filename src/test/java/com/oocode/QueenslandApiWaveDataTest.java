@@ -29,7 +29,7 @@ public class QueenslandApiWaveDataTest {
         SurfConditions expectedSurfConditions = new SurfConditions("Caloundra", LocalDateTime.of(2024, Month.APRIL, 21, 0, 30), "1.170");
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getMaxWaveInfo(), equalTo(expectedSurfConditions));
+        assertThat(waveData.getLargestWaveSurfConditions(), equalTo(expectedSurfConditions));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class QueenslandApiWaveDataTest {
 
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getMaxWaveInfo(), equalTo(expectedSurfConditions));
+        assertThat(waveData.getLargestWaveSurfConditions(), equalTo(expectedSurfConditions));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class QueenslandApiWaveDataTest {
 
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getMaxWaveInfo(), equalTo(expectedSurfConditions));
+        assertThat(waveData.getLargestWaveSurfConditions(), equalTo(expectedSurfConditions));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class QueenslandApiWaveDataTest {
 
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getMaxWaveInfo(), equalTo(expectedSurfConditions));
+        assertThat(waveData.getLargestWaveSurfConditions(), equalTo(expectedSurfConditions));
     }
 
     @Test

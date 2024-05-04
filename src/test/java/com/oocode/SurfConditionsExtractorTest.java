@@ -1,6 +1,6 @@
 package com.oocode;
 
-import com.oocode.fakes.FakeApiWaveData;
+import com.oocode.fakes.FakeWaveData;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class SurfConditionsExtractorTest {
                 LocalDateTime.of(2000, Month.APRIL, 2, 0, 0),
                 "5.000");
 
-        ApiWaveData waveData = new FakeApiWaveData(expectedSurfConditions);
+        WaveData waveData = new FakeWaveData(expectedSurfConditions);
 
         assertThat(SurfConditionsExtractor.extractWaveInfo(waveData), equalTo(expectedSurfConditions));
     }
@@ -32,7 +32,7 @@ public class SurfConditionsExtractorTest {
                 LocalDateTime.of(2024, Month.APRIL, 2, 0, 0),
                 "7.000");
 
-        ApiWaveData waveData = new FakeApiWaveData(expectedSurfConditions);
+        WaveData waveData = new FakeWaveData(expectedSurfConditions);
 
         assertThat(SurfConditionsExtractor.extractWaveInfo(waveData), equalTo(expectedSurfConditions));
     }

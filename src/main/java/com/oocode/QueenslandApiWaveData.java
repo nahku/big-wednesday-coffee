@@ -10,7 +10,7 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 import static java.util.Comparator.comparing;
 
-public class QueenslandApiWaveData implements ApiWaveData {
+public class QueenslandApiWaveData implements WaveData {
 
     private List<String[]> waveDataRows;
 
@@ -32,7 +32,7 @@ public class QueenslandApiWaveData implements ApiWaveData {
         }
     }
 
-    public SurfConditions getMaxWaveInfo() {
+    public SurfConditions getLargestWaveSurfConditions() {
         String[] maxWaveSizeRow = getRowWithMaxWaveSize();
 
         LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(maxWaveSizeRow[2]), 0, ZoneOffset.ofHours(10));
