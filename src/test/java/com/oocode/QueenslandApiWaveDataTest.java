@@ -1,10 +1,8 @@
 package com.oocode;
 
-import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -17,7 +15,7 @@ import static org.junit.Assert.assertThrows;
 public class QueenslandApiWaveDataTest {
 
     @Test
-    public void extractsWaveInfoFromCsv() {
+    public void extractsSurfConditionsFromCsv() {
         String waveCsvData = """
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
@@ -35,7 +33,7 @@ public class QueenslandApiWaveDataTest {
     }
 
     @Test
-    public void extractsWaveInfoFromCsvMultipleLocations() {
+    public void extractsSurfConditionsFromCsvMultipleLocations() {
         String waveCsvData = """
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
@@ -52,7 +50,7 @@ public class QueenslandApiWaveDataTest {
     }
 
     @Test
-    public void extractsWaveInfoFromCsvSimilarHeight() {
+    public void extractsSurfConditionsFromCsvSimilarHeight() {
         String waveCsvData = """
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
@@ -70,7 +68,7 @@ public class QueenslandApiWaveDataTest {
 
     @Test
     @Disabled
-    public void extractsWaveInfoFromCsvPreviousThreeDays() {
+    public void extractsSurfConditionsFromCsvPreviousThreeDays() {
         String waveCsvData = """
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
