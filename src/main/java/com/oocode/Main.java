@@ -3,7 +3,7 @@ package com.oocode;
 import java.time.LocalDate;
 
 public class Main {
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
 
     HttpClient httpClient = new BasicHttpClient();
 
@@ -14,7 +14,7 @@ public class Main {
     }
   }
 
-  private static void createPage(String url, LocalDate today, HttpClient httpClient) throws Exception {
+  private static void createPage(String url, LocalDate today, HttpClient httpClient) {
 
     String waveCsvData = httpClient.readUrl(url);
     WaveInfo extractedWaveInfo = WaveInfoExtractor.extractWaveInfo(waveCsvData);

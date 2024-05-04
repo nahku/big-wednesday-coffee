@@ -61,7 +61,7 @@ public class FileWriterTest {
     @Test
     public void canWriteToHtmlFile() throws IOException {
 
-        String fileName = "test.txt";
+        String fileName = "test.html";
         String content = "<html><body>You should have been at Location D on Sunday - it was gnarly - waves up to 1.200m!</body></html>";
 
         FileHandlingHelper.deleteFileIfItExists(fileName);
