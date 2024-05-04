@@ -3,6 +3,8 @@ package com.oocode.fakes;
 import com.oocode.WaveData;
 import com.oocode.SurfConditions;
 
+import java.time.LocalDate;
+
 /*
  Fakes an instance of the ApiWaveData interface.
  Used to test that the WaveInfoExtractor extracts the correct WaveInfo.
@@ -16,7 +18,7 @@ public class FakeWaveData implements WaveData {
     }
 
     @Override
-    public SurfConditions getLargestWaveSurfConditions() {
+    public SurfConditions getLargestWaveSurfConditions(LocalDate date) {
         return surfConditions;
     }
 }

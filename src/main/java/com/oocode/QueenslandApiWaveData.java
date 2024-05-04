@@ -3,6 +3,7 @@ package com.oocode;
 import com.opencsv.CSVReader;
 
 import java.io.StringReader;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -12,7 +13,7 @@ import static java.util.Comparator.comparing;
 
 public class QueenslandApiWaveData implements WaveData {
 
-    private List<String[]> waveDataRows;
+    private final List<String[]> waveDataRows;
 
     public QueenslandApiWaveData(String waveCsvData) {
         try (CSVReader reader = new CSVReader(new StringReader(waveCsvData))){
@@ -24,7 +25,7 @@ public class QueenslandApiWaveData implements WaveData {
 
             waveDataRows = skipHeader(dataRows);
 
-            if (waveDataRows.get(0).length < 8) {
+            if (waveDataRows.getFirst().length < 8) {
                 throw new IllegalArgumentException("Invalid CSV data: Expected at least 8 columns in the input.");
             }
         } catch (Exception e) {
@@ -32,12 +33,12 @@ public class QueenslandApiWaveData implements WaveData {
         }
     }
 
-    public SurfConditions getLargestWaveSurfConditions() {
+    public SurfConditions getLargestWaveSurfConditions(LocalDate date) {
         String[] maxWaveSizeRow = getRowWithMaxWaveSize();
 
-        LocalDateTime date = LocalDateTime.ofEpochSecond(parseInt(maxWaveSizeRow[2]), 0, ZoneOffset.ofHours(10));
+        LocalDateTime foundDate = LocalDateTime.ofEpochSecond(parseInt(maxWaveSizeRow[2]), 0, ZoneOffset.ofHours(10));
 
-        return new SurfConditions(maxWaveSizeRow[0], date, maxWaveSizeRow[7]);
+        return new SurfConditions(maxWaveSizeRow[0], foundDate, maxWaveSizeRow[7]);
     }
 
     private static List<String[]> skipHeader(List<String[]> csvRows){
