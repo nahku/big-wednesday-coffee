@@ -14,6 +14,8 @@ import java.time.Month;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class E2eTest {
 
@@ -149,6 +151,34 @@ public class E2eTest {
         String output = Files.readString(Paths.get("index.html"), StandardCharsets.UTF_8);
 
         assertThat(output, equalTo(expectedOutput));
+    }
+
+    @Test
+    public void throwsExceptionOnInvalidInputTooFew() {
+        server.startLocalServerPretendingToBeQueenslandApi("");
+        RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://localhost:8123"}));
+        assertEquals("Either provide url and current date or no arguments.", exception.getMessage());
+    }
+
+    @Test
+    public void throwsExceptionOnInvalidInputTooManyArguments() {
+        server.startLocalServerPretendingToBeQueenslandApi("");
+        RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://localhost:8123", "input 2", "input 3"}));
+        assertEquals("Either provide url and current date or no arguments.", exception.getMessage());
+    }
+
+    @Test
+    public void throwsExceptionOnInvalidInputInvalidDate() {
+        server.startLocalServerPretendingToBeQueenslandApi("");
+        RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://localhost:8123", "This should be a date."}));
+        assertEquals("Provided date could not be parsed.", exception.getMessage());
+    }
+
+    @Test
+    public void throwsExceptionOnInvalidInputInvalidUrl() {
+        server.startLocalServerPretendingToBeQueenslandApi("");
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://This should be a url.", "2024-05-05"}));
+        assertEquals("Invalid URL host: \"This should be a url.\"", exception.getMessage());
     }
 
     @BeforeEach

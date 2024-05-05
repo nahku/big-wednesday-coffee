@@ -42,7 +42,6 @@ public class FileWriterTest {
         FileHandlingHelper.deleteFileIfItExists(fileName);
     }
 
-    // can write multiline
     @Test
     public void canWriteMultilineStringToFile() throws IOException {
 
