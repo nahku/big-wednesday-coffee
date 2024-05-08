@@ -15,8 +15,10 @@ public class SurfConditionsTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new SurfConditions(
+                () -> SurfConditionsHelper.createSurfConditions(
                         "Location A",
+                        1,
+                        2,
                         LocalDateTime.of(2000, Month.APRIL, 2, 0,0),
                         "-3.000"
                 )
@@ -29,8 +31,10 @@ public class SurfConditionsTest {
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new SurfConditions(
+                () -> SurfConditionsHelper.createSurfConditions(
                         "Location A",
+                        0,
+                        0,
                         LocalDateTime.of(2000, Month.APRIL, 2, 0,0),
                         "-0.001"
                 )
@@ -40,8 +44,10 @@ public class SurfConditionsTest {
 
     @Test
     public void returnsCorrectDayOfWeek() {
-        SurfConditions surfConditions = new SurfConditions(
+        SurfConditions surfConditions = SurfConditionsHelper.createSurfConditions(
                 "Location XY",
+                175.4,
+                23,
                 LocalDateTime.of(2024, Month.MAY, 4, 0,0),
                 "2.000"
         );
@@ -51,8 +57,10 @@ public class SurfConditionsTest {
 
     @Test
     public void returnsCorrectDayOfWeekWeekday() {
-        SurfConditions surfConditions = new SurfConditions(
+        SurfConditions surfConditions = SurfConditionsHelper.createSurfConditions(
                 "Location XY",
+                2.345,
+                7.58,
                 LocalDateTime.of(2024, Month.MAY, 2, 0,0),
                 "2.000"
         );
@@ -62,8 +70,10 @@ public class SurfConditionsTest {
     @Test
     public void returnsCorrectDate() {
         LocalDateTime dateTime = LocalDateTime.of(2024, Month.MAY, 2, 0,0);
-        SurfConditions surfConditions = new SurfConditions(
+        SurfConditions surfConditions = SurfConditionsHelper.createSurfConditions(
                 "Location XY",
+                0.5,
+                123.4,
                 dateTime,
                 "2.000"
         );
@@ -73,8 +83,10 @@ public class SurfConditionsTest {
     @Test
     public void returnsCorrectOlderDate() {
         LocalDateTime dateTime = LocalDateTime.of(2020, Month.JANUARY, 6, 0,0);
-        SurfConditions surfConditions = new SurfConditions(
+        SurfConditions surfConditions = SurfConditionsHelper.createSurfConditions(
                 "Location XY",
+                1,
+                2,
                 dateTime,
                 "2.000"
         );
@@ -84,8 +96,10 @@ public class SurfConditionsTest {
     @Test
     public void returnsCorrectWaveSizeAsDouble() {
         LocalDateTime dateTime = LocalDateTime.of(2024, Month.MAY, 2, 0,0);
-        SurfConditions surfConditions = new SurfConditions(
+        SurfConditions surfConditions = SurfConditionsHelper.createSurfConditions(
                 "Location XY",
+                1,
+                1,
                 dateTime,
                 "5.000"
         );
@@ -95,12 +109,36 @@ public class SurfConditionsTest {
     @Test
     public void returnsCorrectWaveSizeAsDoubleForSmallWaves() {
         LocalDateTime dateTime = LocalDateTime.of(2024, Month.MAY, 2, 0,0);
-        SurfConditions surfConditions = new SurfConditions(
+        SurfConditions surfConditions = SurfConditionsHelper.createSurfConditions(
                 "Location XY",
+                0,
+                0,
                 dateTime,
                 "0.001"
         );
         assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(0.001));
+    }
+
+    @Test
+    public void returnsCorrectLocation() {
+        Location expectedLocation = new Location("Location XY",0.5, 123.4);
+        SurfConditions surfConditions = new SurfConditions(
+                expectedLocation,
+                LocalDateTime.of(2024, Month.MAY, 2, 0,0),
+                "2.000"
+        );
+        assertEquals(surfConditions.location(), expectedLocation);
+    }
+
+    @Test
+    public void returnsCorrectLocationLargeCoordinates() {
+        Location expectedLocation = new Location("Location Z",179.5, 179.9);
+        SurfConditions surfConditions = new SurfConditions(
+                expectedLocation,
+                LocalDateTime.of(2024, Month.MAY, 10, 0,0),
+                "5.000"
+        );
+        assertEquals(surfConditions.location(), expectedLocation);
     }
 
 }

@@ -27,10 +27,16 @@ public class QueenslandApiWaveDataTest {
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
         List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
-                new SurfConditions("Caloundra",
+                SurfConditionsHelper.createSurfConditions(
+                        "Caloundra",
+                        -26.84552,
+                        153.15474,
                         LocalDateTime.of(2024, Month.APRIL, 21, 0, 0),
                         "1.150"),
-                new SurfConditions("Caloundra",
+                SurfConditionsHelper.createSurfConditions(
+                        "Caloundra",
+                        -26.84552,
+                        153.15471,
                         LocalDateTime.of(2024, Month.APRIL, 21, 0, 30),
                         "1.170")
         );
@@ -46,15 +52,21 @@ public class QueenslandApiWaveDataTest {
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location B,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,1.234,2.234,10.530,4.167,24.70,88.60,-99.90,-99.90
+                    Location B,54,1713623400,2024-04-21T00:30:00,-26.84559,153.15479,1.234,2.234,10.530,4.167,24.70,88.60,-99.90,-99.90
                     """.trim();
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
         List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
-                new SurfConditions("Caloundra",
+                SurfConditionsHelper.createSurfConditions(
+                        "Caloundra",
+                        -26.84552,
+                        153.15474,
                         LocalDateTime.of(2024, Month.APRIL, 21, 0, 0),
                         "1.150"),
-                new SurfConditions("Location B",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location B",
+                        -26.84559,
+                        153.15479,
                         LocalDateTime.of(2024, Month.APRIL, 21, 0, 30),
                         "2.234")
         );
@@ -78,7 +90,10 @@ public class QueenslandApiWaveDataTest {
         LocalDate today = LocalDate.of(2024, Month.APRIL, 24);
 
         List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
-                new SurfConditions("Caloundra",
+                SurfConditionsHelper.createSurfConditions(
+                        "Caloundra",
+                        -26.84552,
+                        153.15471,
                         LocalDateTime.of(2024, Month.APRIL, 23, 8, 0),
                         "1.170")
         );
@@ -102,10 +117,16 @@ public class QueenslandApiWaveDataTest {
         LocalDate today = LocalDate.of(2024, Month.APRIL, 24);
 
         List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
-                new SurfConditions("Location B",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location B",
+                        -26.84552,
+                        153.15471,
                         LocalDateTime.of(2024, Month.APRIL, 21, 8, 0),
                         "5.170"),
-                new SurfConditions("Location C",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location C",
+                        -26.84552,
+                        153.15471,
                         LocalDateTime.of(2024, Month.APRIL, 22, 8, 0),
                         "1.170")
         );
@@ -126,7 +147,7 @@ public class QueenslandApiWaveDataTest {
 
         LocalDate oldDate = LocalDate.of(2000, Month.APRIL, 22);
 
-        List<SurfConditions> expectedSurfConditionsList = new ArrayList<SurfConditions>();
+        List<SurfConditions> expectedSurfConditionsList = new ArrayList<>();
 
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
@@ -154,4 +175,5 @@ public class QueenslandApiWaveDataTest {
         assertEquals("Failed to extract wave information from input.", exception.getMessage());
         assertEquals("Invalid CSV data: Expected at least 8 columns in the input.", exception.getCause().getMessage());
     }
+
 }

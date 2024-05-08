@@ -20,12 +20,18 @@ public class BiggestWaveSurfConditionsExtractorTest {
     @Test
     public void canExtractCorrectSurfConditions() {
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Location A",
+        SurfConditions expectedSurfConditions = SurfConditionsHelper.createSurfConditions(
+                "Location A",
+                1.0,
+                3.0,
                 LocalDateTime.of(2000, Month.APRIL, 2, 1, 0),
                 "6.000");
 
         List<SurfConditions> surfConditionsList = Arrays.asList(
-                new SurfConditions("Location A",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location A",
+                        3.45,
+                        4.56,
                         LocalDateTime.of(2000, Month.APRIL, 2, 0, 0),
                         "5.000"),
                 expectedSurfConditions
@@ -40,15 +46,25 @@ public class BiggestWaveSurfConditionsExtractorTest {
     @Test
     public void canExtractCorrectSurfConditionsMultipleLocations() {
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Location A",
+        SurfConditions expectedSurfConditions = SurfConditionsHelper.createSurfConditions(
+                "Location A",
+                2.34,
+                3.45,
                 LocalDateTime.of(2000, Month.APRIL, 2, 1, 0),
-                "6.000");
+                "6.000"
+        );
 
         List<SurfConditions> surfConditionsList = Arrays.asList(
-                new SurfConditions("Location B",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location B",
+                        3.34,
+                        6.54,
                         LocalDateTime.of(2000, Month.APRIL, 2, 0, 0),
                         "5.000"),
-                new SurfConditions("Location C",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location C",
+                        45.3,
+                        44.3,
                         LocalDateTime.of(2000, Month.APRIL, 2, 2, 0),
                         "5.900"),
                 expectedSurfConditions
@@ -63,12 +79,19 @@ public class BiggestWaveSurfConditionsExtractorTest {
     @Test
     public void extractsSurfConditionsFromCsvSimilarHeight() {
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Caloundra",
+        SurfConditions expectedSurfConditions = SurfConditionsHelper.createSurfConditions(
+                "Caloundra",
+                43.53,
+                54.34,
                 LocalDateTime.of(2024, Month.APRIL, 21, 0, 0),
-                "5.000");
+                "5.000"
+        );
 
         List<SurfConditions> surfConditionsList = Arrays.asList(
-                new SurfConditions("Location B",
+                SurfConditionsHelper.createSurfConditions(
+                        "Location B",
+                        0,
+                        0,
                         LocalDateTime.of(2024, Month.APRIL, 21, 0, 30),
                         "4.900"),
                 expectedSurfConditions
@@ -85,15 +108,24 @@ public class BiggestWaveSurfConditionsExtractorTest {
     public void extractsSurfConditionsFromCsvPreviousThreeDays() {
         // Tests that the extractor calls the data representation with the correct dates
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Caloundra",
+        SurfConditions expectedSurfConditions = SurfConditionsHelper.createSurfConditions(
+                "Caloundra",
+                0,
+                0,
                 LocalDateTime.of(2024, Month.APRIL, 21, 0, 0),
                 "0.646");
 
         List<SurfConditions> surfConditionsList = Arrays.asList(
-                new SurfConditions("Caloundra",
+                SurfConditionsHelper.createSurfConditions(
+                        "Caloundra",
+                        0,
+                        0,
                         LocalDateTime.of(2024, Month.APRIL, 20, 0, 30),
                         "0.605"),
-                new SurfConditions("Caloundra",
+                SurfConditionsHelper.createSurfConditions(
+                        "Caloundra",
+                        0,
+                        0,
                         LocalDateTime.of(2024, Month.APRIL, 20, 1, 00),
                         "0.624"),
                 expectedSurfConditions
