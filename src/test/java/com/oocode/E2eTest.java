@@ -175,6 +175,22 @@ public class E2eTest {
     }
 
     @Test
+    public void throwsExceptionOnInvalidInputCurrentDateOutOfDataRange() {
+
+        server.startLocalServerPretendingToBeQueenslandApi("""
+                    Wave Data provided @ 02:15hrs on 28-04-2024
+                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                    Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90 
+                    """.trim());
+
+        String url = "http://localhost:8123";
+        LocalDate date = LocalDate.of(2025, Month.APRIL, 24);
+
+        RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{url, date.toString()}));
+        assertEquals("No surf conditions found for date: 2025-04-24", exception.getMessage());
+    }
+
+    @Test
     public void throwsExceptionOnInvalidInputInvalidUrl() {
         server.startLocalServerPretendingToBeQueenslandApi("");
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://This should be a url.", "2024-05-05"}));
