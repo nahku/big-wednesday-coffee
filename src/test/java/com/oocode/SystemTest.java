@@ -17,13 +17,24 @@ public class SystemTest {
 
     @Test
     public void canProduceOutputBasedOnQueenslandApi() throws IOException {
+        String threeDecimalsFloatRegex = "?\\d+\\.\\d{3}"; // Matches a non-negative floating point number with 3 decimal places
+        String fiveDecimalsFloatRegex = "-?\\d+\\.\\d{5}"; // Matches a floating point number with 3 decimal places
+        String latLonRegex = fiveDecimalsFloatRegex + "," + fiveDecimalsFloatRegex; // Matches latitude and longitude separated by a comma
 
-        Pattern regex = Pattern.compile("<html><body>You should have been at .* on .* - it was gnarly - waves up to [0-9]+\\.[0-9]+m!</body></html>");
+        String googleMapsLinkRegex =  "<a target=\"_blank\" href=\"http://www.google.com/maps/place/" + latLonRegex + "/@" + latLonRegex + ",12z\">.*</a>";
+
+        String waveSizeTextRegex = "You should have been at " + googleMapsLinkRegex + " on .* - it was gnarly - waves up to " + threeDecimalsFloatRegex + "m!";
+
+        Pattern responseRegex = Pattern.compile(
+                "<html><body>" +
+                waveSizeTextRegex +
+                "</body></html>"
+        );
 
         Main.main(new String[]{});
         String output = Files.readString(Paths.get("index.html"), StandardCharsets.UTF_8);
 
-        Matcher matcher = regex.matcher(output);
+        Matcher matcher = responseRegex.matcher(output);
         assertTrue("Output does not match expected format.", matcher.matches());
 
     }
