@@ -17,26 +17,26 @@ public class SystemTest {
 
     @Test
     public void canProduceOutputBasedOnQueenslandApi() throws IOException {
-        String threeDecimalsFloatRegex = "?\\d+\\.\\d{3}"; // Matches a non-negative floating point number with 3 decimal places
-        String fiveDecimalsFloatRegex = "-?\\d+\\.\\d{5}"; // Matches a floating point number with 3 decimal places
-        String latLonRegex = fiveDecimalsFloatRegex + "," + fiveDecimalsFloatRegex; // Matches latitude and longitude separated by a comma
-
-        String googleMapsLinkRegex =  "<a target=\"_blank\" href=\"http://www.google.com/maps/place/" + latLonRegex + "/@" + latLonRegex + ",12z\">.*</a>";
-
-        String waveSizeTextRegex = "You should have been at " + googleMapsLinkRegex + " on .* - it was gnarly - waves up to " + threeDecimalsFloatRegex + "m!";
-
-        Pattern responseRegex = Pattern.compile(
-                "<html><body>" +
-                waveSizeTextRegex +
-                "</body></html>"
-        );
+        Pattern outputPattern = buildOutputPattern();
 
         Main.main(new String[]{});
         String output = Files.readString(Paths.get("index.html"), StandardCharsets.UTF_8);
 
-        Matcher matcher = responseRegex.matcher(output);
+        Matcher matcher = outputPattern.matcher(output);
         assertTrue("Output does not match expected format.", matcher.matches());
 
+    }
+
+    private static Pattern buildOutputPattern() {
+        String threeDecimalsFloatRegex = "?\\d+\\.\\d{3}"; // Matches a non-negative floating point number with 3 decimal places
+        String fiveDecimalsFloatRegex = "-?\\d+\\.\\d{5}"; // Matches a floating point number with 3 decimal places
+        String latLonRegex = fiveDecimalsFloatRegex + "," + fiveDecimalsFloatRegex; // Matches latitude and longitude separated by a comma
+
+        String googleMapsLinkRegex = "<a target=\"_blank\" href=\"http://www.google.com/maps/place/" + latLonRegex + "/@" + latLonRegex + ",12z\">.*</a>";
+
+        String fullOutput = "<html><body>You should have been at " + googleMapsLinkRegex + " on .* - it was gnarly - waves up to " + threeDecimalsFloatRegex + "m!</body></html>";
+
+        return Pattern.compile(fullOutput);
     }
 
     @BeforeEach
