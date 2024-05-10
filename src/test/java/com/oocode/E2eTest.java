@@ -1,6 +1,7 @@
 package com.oocode;
 
 import com.oocode.fakes.FakeQueenslandApiServer;
+import com.oocode.utils.FileHandlingHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;

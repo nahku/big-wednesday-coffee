@@ -1,4 +1,4 @@
-package com.oocode;
+package com.oocode.utils;
 
 import java.io.IOException;
 import java.nio.file.Files;

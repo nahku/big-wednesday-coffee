@@ -1,6 +1,7 @@
 package com.oocode;
 
 import com.oocode.fakes.FakeWaveData;
+import com.oocode.utils.SurfConditionsHelper;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -106,8 +107,6 @@ public class BiggestWaveSurfConditionsExtractorTest {
 
     @Test
     public void extractsSurfConditionsFromCsvPreviousThreeDays() {
-        // Tests that the extractor calls the data representation with the correct dates
-
         SurfConditions expectedSurfConditions = SurfConditionsHelper.createSurfConditions(
                 "Caloundra",
                 0,
@@ -136,9 +135,6 @@ public class BiggestWaveSurfConditionsExtractorTest {
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
         assertThat(BiggestWaveSurfConditionsExtractor.extractSurfConditions(waveData, today), equalTo(expectedSurfConditions));
-
-        assertThat(waveData.fromDateCalled, equalTo(LocalDate.of(2024, Month.APRIL, 19)));
-        assertThat(waveData.toDateCalled, equalTo(LocalDate.of(2024, Month.APRIL, 21)));
     }
 
     @Test

@@ -1,4 +1,7 @@
-package com.oocode;
+package com.oocode.utils;
+
+import com.oocode.Location;
+import com.oocode.SurfConditions;
 
 import java.time.LocalDateTime;
 

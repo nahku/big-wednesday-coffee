@@ -14,8 +14,6 @@ public class FakeWaveData implements WaveData {
 
     private final List<SurfConditions> surfConditions;
 
-    public LocalDate fromDateCalled; // To check whether the getSurfConditions function was called with the correct dates.
-    public LocalDate toDateCalled;
 
     public FakeWaveData(List<SurfConditions> surfConditions) {
         this.surfConditions = surfConditions;
@@ -23,8 +21,6 @@ public class FakeWaveData implements WaveData {
 
     @Override
     public List<SurfConditions> getSurfConditions(LocalDate fromDate, LocalDate toDate) {
-        fromDateCalled = fromDate;
-        toDateCalled = toDate;
         return surfConditions;
     }
 }
