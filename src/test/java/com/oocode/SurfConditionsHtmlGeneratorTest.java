@@ -17,7 +17,7 @@ public class SurfConditionsHtmlGeneratorTest {
                 "Location XY",
                 0,
                 0,
-                LocalDateTime.of(2024, Month.MAY,1, 0,30),
+                LocalDateTime.of(2024, Month.MAY, 1, 0, 30),
                 "2.000"
         );
 
@@ -33,7 +33,7 @@ public class SurfConditionsHtmlGeneratorTest {
                 "Location A",
                 0,
                 0,
-                LocalDateTime.of(2024, Month.MAY,1, 0,0),
+                LocalDateTime.of(2024, Month.MAY, 1, 0, 0),
                 "5.000"
         );
 
@@ -53,7 +53,7 @@ public class SurfConditionsHtmlGeneratorTest {
                 "Location C",
                 2.3,
                 4.8,
-                LocalDateTime.of(2020, Month.APRIL,6, 20,30),
+                LocalDateTime.of(2020, Month.APRIL, 6, 20, 30),
                 "10.000"
         );
 
@@ -73,7 +73,7 @@ public class SurfConditionsHtmlGeneratorTest {
                 "Location C",
                 -2.3,
                 4.8,
-                LocalDateTime.of(2020, Month.APRIL,6, 20,30),
+                LocalDateTime.of(2020, Month.APRIL, 6, 20, 30),
                 "10.000"
         );
 
@@ -92,7 +92,7 @@ public class SurfConditionsHtmlGeneratorTest {
                 "Caloundra",
                 -122.3,
                 46.8,
-                LocalDateTime.of(2020, Month.APRIL,6, 20,30),
+                LocalDateTime.of(2020, Month.APRIL, 6, 20, 30),
                 "10.000"
         );
 

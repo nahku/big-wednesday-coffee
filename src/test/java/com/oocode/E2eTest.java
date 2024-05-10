@@ -24,13 +24,13 @@ public class E2eTest {
     @Test
     public void canFindMaximumWaveHeightFromQueenslandDataSingleLocation() throws Exception {
         server.startLocalServerPretendingToBeQueenslandApi("""
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    Caloundra,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.624,1.150,10.530,4.167,24.70,91.40,-99.90,-99.90
-                    Caloundra,54,1713627000,2024-04-21T01:30:00,-26.84553,153.15459,0.660,1.140,10.000,4.348,24.70,94.20,-99.90,-99.90
-                    """.trim());
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Caloundra,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.624,1.150,10.530,4.167,24.70,91.40,-99.90,-99.90
+                Caloundra,54,1713627000,2024-04-21T01:30:00,-26.84553,153.15459,0.660,1.140,10.000,4.348,24.70,94.20,-99.90,-99.90
+                """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2024, Month.APRIL, 22);
@@ -49,11 +49,11 @@ public class E2eTest {
     @Test
     public void canFindMaximumWaveHeightFromQueenslandDataMultipleLocations() throws Exception {
         server.startLocalServerPretendingToBeQueenslandApi("""
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location B,54,1713623400,2024-04-21T00:30:00,-26.84532,153.15641,0.605,1.300,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    """.trim());
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location B,54,1713623400,2024-04-21T00:30:00,-26.84532,153.15641,0.605,1.300,10.530,4.167,24.70,88.60,-99.90,-99.90
+                """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2024, Month.APRIL, 22);
@@ -72,13 +72,13 @@ public class E2eTest {
     public void canFindMaximumWaveHeightFromQueenslandDataSimilarHeight() throws Exception {
         // Tests if correct height is returned if height difference is small
         server.startLocalServerPretendingToBeQueenslandApi("""
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.171,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    Caloundra,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.624,1.169,10.530,4.167,24.70,91.40,-99.90,-99.90
-                    Caloundra,54,1713627000,2024-04-21T01:30:00,-26.84553,153.15459,0.660,1.170,10.000,4.348,24.70,94.20,-99.90,-99.90
-                    """.trim());
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.171,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Caloundra,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.624,1.169,10.530,4.167,24.70,91.40,-99.90,-99.90
+                Caloundra,54,1713627000,2024-04-21T01:30:00,-26.84553,153.15459,0.660,1.170,10.000,4.348,24.70,94.20,-99.90,-99.90
+                """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2024, Month.APRIL, 22);
@@ -101,13 +101,13 @@ public class E2eTest {
          */
 
         server.startLocalServerPretendingToBeQueenslandApi("""
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Location D,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.200,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location A,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.200,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location B,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.9,1.200,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    Location C,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.9,1.200,10.530,4.167,24.70,91.40,-99.90,-99.90
-                    """.trim());
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Location D,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.200,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location A,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.200,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location B,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.9,1.200,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Location C,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.9,1.200,10.530,4.167,24.70,91.40,-99.90,-99.90
+                """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2024, Month.APRIL, 23);
@@ -145,13 +145,13 @@ public class E2eTest {
     public void canFindMaximumWaveHeightPreviousThreeDays() throws Exception {
 
         server.startLocalServerPretendingToBeQueenslandApi("""
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location A,54,1713650400,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.200,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location B,54,1713736800,2024-04-22T00:00:00,-26.84552,153.15471,0.9,1.300,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    Location C,54,1713823200,2024-04-23T01:00:00,-26.84553,153.15469,0.9,1.400,10.530,4.167,24.70,91.40,-99.90,-99.90
-                    """.trim());
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location A,54,1713650400,2024-04-21T00:00:00,-26.84552,153.15474,0.9,1.200,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location B,54,1713736800,2024-04-22T00:00:00,-26.84552,153.15471,0.9,1.300,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Location C,54,1713823200,2024-04-23T01:00:00,-26.84553,153.15469,0.9,1.400,10.530,4.167,24.70,91.40,-99.90,-99.90
+                """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2024, Month.APRIL, 24);
@@ -191,10 +191,10 @@ public class E2eTest {
     public void throwsExceptionOnInvalidInputCurrentDateOutOfDataRange() {
 
         server.startLocalServerPretendingToBeQueenslandApi("""
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90 
-                    """.trim());
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90 
+                """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2025, Month.APRIL, 24);

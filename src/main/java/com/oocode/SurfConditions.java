@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public record SurfConditions(Location location, LocalDateTime date, String waveSize){
+public record SurfConditions(Location location, LocalDateTime date, String waveSize) {
 
     public SurfConditions {
         if (Double.valueOf(waveSize) < 0) {

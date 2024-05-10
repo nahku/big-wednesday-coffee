@@ -15,14 +15,13 @@ public class BasicHttpClient implements HttpClient {
         okHttpClient = new OkHttpClient();
     }
 
-    public String readUrl(String url){
+    public String readUrl(String url) {
         Request request = new Request.Builder().url(url).build();
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 ResponseBody rb = response.body();
                 return rb.string();
-            }
-            else{
+            } else {
                 throw new RuntimeException("Reading url failed: " + url + ". Error code: " + response.code());
             }
         } catch (IOException e) {

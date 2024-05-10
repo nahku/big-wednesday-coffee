@@ -19,11 +19,11 @@ public class QueenslandApiWaveDataTest {
     @Test
     public void extractsSurfConditionsFromCsvSingleLocation() {
         String waveCsvData = """
-                    Wave Data provided @ 02:15hrs on 22-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    """.trim();
+                Wave Data provided @ 02:15hrs on 22-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                """.trim();
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
         List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
@@ -49,11 +49,11 @@ public class QueenslandApiWaveDataTest {
     @Test
     public void extractsSurfConditionsFromCsvMultipleLocations() {
         String waveCsvData = """
-                    Wave Data provided @ 02:15hrs on 22-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location B,54,1713623400,2024-04-21T00:30:00,-26.84559,153.15479,1.234,2.234,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    """.trim();
+                Wave Data provided @ 02:15hrs on 22-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location B,54,1713623400,2024-04-21T00:30:00,-26.84559,153.15479,1.234,2.234,10.530,4.167,24.70,88.60,-99.90,-99.90
+                """.trim();
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
         List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
@@ -139,11 +139,11 @@ public class QueenslandApiWaveDataTest {
     @Test
     public void returnsEmptyListIfFilterDatesAreNotInData() {
         String waveCsvData = """
-                    Wave Data provided @ 02:15hrs on 22-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    """.trim();
+                Wave Data provided @ 02:15hrs on 22-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                """.trim();
 
         LocalDate oldDate = LocalDate.of(2000, Month.APRIL, 22);
 
@@ -165,11 +165,11 @@ public class QueenslandApiWaveDataTest {
     @Test
     public void throwsExceptionOnInvalidCsv() {
         String invalidWaveCsvData = """
-                    Wave Data provided @ 02:15hrs on 28-04-2024
-                    Site, SiteNumber
-                    Caloundra, 54
-                    Caloundra, 66
-                    """.trim();
+                Wave Data provided @ 02:15hrs on 28-04-2024
+                Site, SiteNumber
+                Caloundra, 54
+                Caloundra, 66
+                """.trim();
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> new QueenslandApiWaveData(invalidWaveCsvData));
         assertEquals("Failed to extract wave information from input.", exception.getMessage());

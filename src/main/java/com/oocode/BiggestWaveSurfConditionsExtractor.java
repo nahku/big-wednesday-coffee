@@ -10,16 +10,16 @@ public class BiggestWaveSurfConditionsExtractor {
         LocalDate fromDate = date.minusDays(3);
         LocalDate toDate = date.minusDays(1);
 
-        List<SurfConditions>  surfConditionsLastThreeDays = waveData.getSurfConditions(fromDate, toDate);
+        List<SurfConditions> surfConditionsLastThreeDays = waveData.getSurfConditions(fromDate, toDate);
 
-        if(surfConditionsLastThreeDays.isEmpty()) {
+        if (surfConditionsLastThreeDays.isEmpty()) {
             throw new IllegalArgumentException("No surf conditions found for date: " + date);
         }
 
         return getSurfConditionsWithMaxWaveSize(surfConditionsLastThreeDays);
     }
 
-    private static SurfConditions getSurfConditionsWithMaxWaveSize(List<SurfConditions> surfConditions){
+    private static SurfConditions getSurfConditionsWithMaxWaveSize(List<SurfConditions> surfConditions) {
         return surfConditions.stream().max(Comparator.comparing(conditions -> conditions.getWaveSizeAsDouble())).get();
     }
 }

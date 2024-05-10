@@ -17,7 +17,7 @@ public class FakeWaveData implements WaveData {
     public LocalDate fromDateCalled; // To check whether the getSurfConditions function was called with the correct dates.
     public LocalDate toDateCalled;
 
-    public FakeWaveData(List<SurfConditions> surfConditions){
+    public FakeWaveData(List<SurfConditions> surfConditions) {
         this.surfConditions = surfConditions;
     }
 
