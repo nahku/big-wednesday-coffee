@@ -9,11 +9,10 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
-import static java.util.Comparator.comparing;
 
 public class QueenslandApiWaveData implements WaveData {
 
-    private final List<String[]> waveDataRows;
+    private final List<SurfConditions> surfConditions;
 
     public QueenslandApiWaveData(String waveCsvData) {
         try (CSVReader reader = new CSVReader(new StringReader(waveCsvData))){
@@ -23,29 +22,29 @@ public class QueenslandApiWaveData implements WaveData {
                 throw new IllegalArgumentException("Invalid CSV data: Expected at least 3 rows in the input.");
             }
 
-            waveDataRows = skipHeader(dataRows);
+            List<String[]> waveDataRows = skipHeader(dataRows);
 
             if (waveDataRows.getFirst().length < 8) {
                 throw new IllegalArgumentException("Invalid CSV data: Expected at least 8 columns in the input.");
             }
+
+            surfConditions = waveDataRows.stream().map(row -> new SurfConditions(row[0], LocalDateTime.ofEpochSecond(parseInt(row[2]), 0, ZoneOffset.ofHours(10)), row[7])).toList();
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to extract wave information from input.", e);
         }
     }
 
-    public SurfConditions getLargestWaveSurfConditions(LocalDate date) {
-        String[] maxWaveSizeRow = getRowWithMaxWaveSize();
+    @Override
+    public List<SurfConditions> getSurfConditions(LocalDate fromDate, LocalDate toDate) {
+        return surfConditions.stream().filter(conditions -> isBetween(fromDate, toDate, conditions.getDate())).toList();
+    }
 
-        LocalDateTime foundDate = LocalDateTime.ofEpochSecond(parseInt(maxWaveSizeRow[2]), 0, ZoneOffset.ofHours(10));
-
-        return new SurfConditions(maxWaveSizeRow[0], foundDate, maxWaveSizeRow[7]);
+    private static boolean isBetween(LocalDate startDate, LocalDate endDate, LocalDate dateToVerify) {
+        return !dateToVerify.isBefore(startDate) && !dateToVerify.isAfter(endDate);
     }
 
     private static List<String[]> skipHeader(List<String[]> csvRows){
         return csvRows.stream().skip(2).toList();
-    }
-
-    private String[] getRowWithMaxWaveSize(){
-        return waveDataRows.stream().max(comparing(o -> Double.valueOf(o[7]))).orElse(null);
     }
 }

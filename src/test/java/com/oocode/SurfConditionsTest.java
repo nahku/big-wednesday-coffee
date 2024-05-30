@@ -48,6 +48,7 @@ public class SurfConditionsTest {
         assertEquals("Saturday", surfConditions.getDayOfWeek());
     }
 
+
     @Test
     public void returnsCorrectDayOfWeekWeekday() {
         SurfConditions surfConditions = new SurfConditions(
@@ -57,4 +58,49 @@ public class SurfConditionsTest {
         );
         assertEquals("Thursday", surfConditions.getDayOfWeek());
     }
+
+    @Test
+    public void returnsCorrectDate() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, Month.MAY, 2, 0,0);
+        SurfConditions surfConditions = new SurfConditions(
+                "Location XY",
+                dateTime,
+                "2.000"
+        );
+        assertEquals(surfConditions.getDate(), dateTime.toLocalDate());
+    }
+
+    @Test
+    public void returnsCorrectOlderDate() {
+        LocalDateTime dateTime = LocalDateTime.of(2020, Month.JANUARY, 6, 0,0);
+        SurfConditions surfConditions = new SurfConditions(
+                "Location XY",
+                dateTime,
+                "2.000"
+        );
+        assertEquals(surfConditions.getDate(), dateTime.toLocalDate());
+    }
+
+    @Test
+    public void returnsCorrectWaveSizeAsDouble() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, Month.MAY, 2, 0,0);
+        SurfConditions surfConditions = new SurfConditions(
+                "Location XY",
+                dateTime,
+                "5.000"
+        );
+        assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(5));
+    }
+
+    @Test
+    public void returnsCorrectWaveSizeAsDoubleForSmallWaves() {
+        LocalDateTime dateTime = LocalDateTime.of(2024, Month.MAY, 2, 0,0);
+        SurfConditions surfConditions = new SurfConditions(
+                "Location XY",
+                dateTime,
+                "0.001"
+        );
+        assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(0.001));
+    }
+
 }

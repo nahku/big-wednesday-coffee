@@ -1,11 +1,13 @@
 package com.oocode;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,21 +17,27 @@ import static org.junit.Assert.assertThrows;
 public class QueenslandApiWaveDataTest {
 
     @Test
-    public void extractsSurfConditionsFromCsv() {
+    public void extractsSurfConditionsFromCsvSingleLocation() {
         String waveCsvData = """
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
                     Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    Caloundra,54,1713625200,2024-04-21T01:00:00,-26.84553,153.15469,0.624,1.150,10.530,4.167,24.70,91.40,-99.90,-99.90
-                    Caloundra,54,1713627000,2024-04-21T01:30:00,-26.84553,153.15459,0.660,1.140,10.000,4.348,24.70,94.20,-99.90,-99.90
                     """.trim();
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Caloundra", LocalDateTime.of(2024, Month.APRIL, 21, 0, 30), "1.170");
+        List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
+                new SurfConditions("Caloundra",
+                        LocalDateTime.of(2024, Month.APRIL, 21, 0, 0),
+                        "1.150"),
+                new SurfConditions("Caloundra",
+                        LocalDateTime.of(2024, Month.APRIL, 21, 0, 30),
+                        "1.170")
+        );
+
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getLargestWaveSurfConditions(today), equalTo(expectedSurfConditions));
+        assertThat(waveData.getSurfConditions(today.minusDays(3), today.minusDays(1)), equalTo(expectedSurfConditionsList));
     }
 
     @Test
@@ -42,46 +50,87 @@ public class QueenslandApiWaveDataTest {
                     """.trim();
         LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Location B", LocalDateTime.of(2024, Month.APRIL, 21, 0, 30), "2.234");
+        List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
+                new SurfConditions("Caloundra",
+                        LocalDateTime.of(2024, Month.APRIL, 21, 0, 0),
+                        "1.150"),
+                new SurfConditions("Location B",
+                        LocalDateTime.of(2024, Month.APRIL, 21, 0, 30),
+                        "2.234")
+        );
 
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getLargestWaveSurfConditions(today), equalTo(expectedSurfConditions));
+        assertThat(waveData.getSurfConditions(today.minusDays(3), today.minusDays(1)), equalTo(expectedSurfConditionsList));
     }
 
     @Test
-    public void extractsSurfConditionsFromCsvSimilarHeight() {
+    public void filtersSurfConditionsByDateSingleLocation() {
+        String waveCsvData = """
+                Wave Data provided @ 02:15hrs on 22-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Caloundra,54,1713650400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Caloundra,54,1713650400,2024-04-22T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Caloundra,54,1713823200,2024-04-23T08:00:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+
+                """.trim();
+        LocalDate today = LocalDate.of(2024, Month.APRIL, 24);
+
+        List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
+                new SurfConditions("Caloundra",
+                        LocalDateTime.of(2024, Month.APRIL, 23, 8, 0),
+                        "1.170")
+        );
+
+        QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
+
+        assertThat(waveData.getSurfConditions(today.minusDays(1), today.minusDays(1)), equalTo(expectedSurfConditionsList));
+    }
+
+    @Test
+    public void filtersSurfConditionsByDateMultipleLocationsMultipleDays() {
+        String waveCsvData = """
+                Wave Data provided @ 02:15hrs on 22-04-2024
+                Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
+                Caloundra,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
+                Location B,54,1713650400,2024-04-21T08:00:00,-26.84552,153.15471,0.605,5.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Location C,54,1713736800,2024-04-22T08:00:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+                Location d,54,1713823200,2024-04-23T08:00:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
+
+                """.trim();
+        LocalDate today = LocalDate.of(2024, Month.APRIL, 24);
+
+        List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
+                new SurfConditions("Location B",
+                        LocalDateTime.of(2024, Month.APRIL, 21, 8, 0),
+                        "5.170"),
+                new SurfConditions("Location C",
+                        LocalDateTime.of(2024, Month.APRIL, 22, 8, 0),
+                        "1.170")
+        );
+
+        QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
+
+        assertThat(waveData.getSurfConditions(today.minusDays(3), today.minusDays(2)), equalTo(expectedSurfConditionsList));
+    }
+
+    @Test
+    public void returnsEmptyListIfFilterDatesAreNotInData() {
         String waveCsvData = """
                     Wave Data provided @ 02:15hrs on 22-04-2024
                     Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
                     Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Location B,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.645,1.149,10.530,4.167,24.70,88.60,-99.90,-99.90
+                    Caloundra,54,1713623400,2024-04-21T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
                     """.trim();
-        LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
 
-        SurfConditions expectedSurfConditions = new SurfConditions("Caloundra", LocalDateTime.of(2024, Month.APRIL, 21, 0, 0), "1.150");
+        LocalDate oldDate = LocalDate.of(2000, Month.APRIL, 22);
+
+        List<SurfConditions> expectedSurfConditionsList = new ArrayList<SurfConditions>();
 
         QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
 
-        assertThat(waveData.getLargestWaveSurfConditions(today), equalTo(expectedSurfConditions));
-    }
-
-    @Test
-    @Disabled
-    public void extractsSurfConditionsFromCsvPreviousThreeDays() {
-        String waveCsvData = """
-                    Wave Data provided @ 02:15hrs on 22-04-2024
-                    Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                    Caloundra,54,1713621600,2024-04-21T00:00:00,-26.84552,153.15474,0.646,1.150,10.530,4.040,24.70,75.90,-99.90,-99.90
-                    Caloundra,54,1713623400,2024-04-20T00:30:00,-26.84552,153.15471,0.605,1.170,10.530,4.167,24.70,88.60,-99.90,-99.90
-                    Caloundra,54,1713625200,2024-04-19T01:00:00,-26.84553,153.15469,0.624,1.150,10.530,4.167,24.70,91.40,-99.90,-99.90
-                    """.trim();
-        LocalDate today = LocalDate.of(2024, Month.APRIL, 22);
-        SurfConditions expectedSurfConditions = new SurfConditions("Caloundra", LocalDateTime.of(2024, Month.APRIL, 22, 0, 30), "1.170");
-
-        QueenslandApiWaveData waveData = new QueenslandApiWaveData(waveCsvData);
-
-        assertThat(waveData.getLargestWaveSurfConditions(today), equalTo(expectedSurfConditions));
+        assertThat(waveData.getSurfConditions(oldDate.minusDays(3), oldDate.minusDays(1)), equalTo(expectedSurfConditionsList));
     }
 
     @Test
