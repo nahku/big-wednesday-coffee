@@ -1,6 +1,7 @@
 package com.oocode;
 
 import com.oocode.utils.SurfConditionsHelper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -90,7 +91,7 @@ public class QueenslandApiWaveDataTest {
                 """.trim();
         LocalDate today = LocalDate.of(2024, Month.APRIL, 24);
 
-        List<SurfConditions> expectedSurfConditionsList = Arrays.asList(
+        List<SurfConditions> expectedSurfConditionsList = List.of(
                 SurfConditionsHelper.createSurfConditions(
                         "Caloundra",
                         -26.84552,
@@ -159,8 +160,8 @@ public class QueenslandApiWaveDataTest {
     public void throwsExceptionOnEmptyCsv() {
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> new QueenslandApiWaveData(""));
-        assertEquals("Failed to extract wave information from input.", exception.getMessage());
-        assertEquals("Invalid CSV data: Expected at least 3 rows in the input.", exception.getCause().getMessage());
+        Assertions.assertEquals("Failed to extract wave information from input.", exception.getMessage());
+        Assertions.assertEquals("Invalid CSV data: Expected at least 3 rows in the input.", exception.getCause().getMessage());
     }
 
     @Test
@@ -173,8 +174,8 @@ public class QueenslandApiWaveDataTest {
                 """.trim();
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> new QueenslandApiWaveData(invalidWaveCsvData));
-        assertEquals("Failed to extract wave information from input.", exception.getMessage());
-        assertEquals("Invalid CSV data: Expected at least 8 columns in the input.", exception.getCause().getMessage());
+        Assertions.assertEquals("Failed to extract wave information from input.", exception.getMessage());
+        Assertions.assertEquals("Invalid CSV data: Expected at least 8 columns in the input.", exception.getCause().getMessage());
     }
 
 }

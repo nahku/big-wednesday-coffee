@@ -1,6 +1,7 @@
 package com.oocode;
 
 import com.oocode.utils.SurfConditionsHelper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -8,7 +9,6 @@ import java.time.Month;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class SurfConditionsHtmlGeneratorTest {
 
@@ -24,8 +24,8 @@ public class SurfConditionsHtmlGeneratorTest {
 
         String response = SurfConditionsHtmlGenerator.generateHtmlFromSurfConditions(surfConditions);
 
-        assertTrue(response.startsWith("<html><body>"));
-        assertTrue(response.endsWith("</body></html>"));
+        Assertions.assertTrue(response.startsWith("<html><body>"));
+        Assertions.assertTrue(response.endsWith("</body></html>"));
     }
 
     @Test
@@ -43,9 +43,9 @@ public class SurfConditionsHtmlGeneratorTest {
 
         String response = SurfConditionsHtmlGenerator.generateHtmlFromSurfConditions(surfConditions);
 
-        assertTrue(response.startsWith(expectedResponseStart));
-        assertTrue(response.contains("Location A"));
-        assertTrue(response.endsWith(expectedResponseEnd));
+        Assertions.assertTrue(response.startsWith(expectedResponseStart));
+        Assertions.assertTrue(response.contains("Location A"));
+        Assertions.assertTrue(response.endsWith(expectedResponseEnd));
     }
 
     @Test
@@ -63,9 +63,9 @@ public class SurfConditionsHtmlGeneratorTest {
 
         String response = SurfConditionsHtmlGenerator.generateHtmlFromSurfConditions(surfConditions);
 
-        assertTrue(response.startsWith(expectedResponseStart));
-        assertTrue(response.contains("Location C"));
-        assertTrue(response.endsWith(expectedResponseEnd));
+        Assertions.assertTrue(response.startsWith(expectedResponseStart));
+        Assertions.assertTrue(response.contains("Location C"));
+        Assertions.assertTrue(response.endsWith(expectedResponseEnd));
     }
 
     @Test

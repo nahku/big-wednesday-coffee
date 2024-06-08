@@ -20,6 +20,6 @@ public class BiggestWaveSurfConditionsExtractor {
     }
 
     private static SurfConditions getSurfConditionsWithMaxWaveSize(List<SurfConditions> surfConditions) {
-        return surfConditions.stream().max(Comparator.comparing(conditions -> conditions.getWaveSizeAsDouble())).get();
+        return surfConditions.stream().max(Comparator.comparing(SurfConditions::getWaveSizeAsDouble)).get();
     }
 }

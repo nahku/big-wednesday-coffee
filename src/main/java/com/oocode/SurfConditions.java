@@ -8,7 +8,7 @@ import java.util.Locale;
 public record SurfConditions(Location location, LocalDateTime date, String waveSize) {
 
     public SurfConditions {
-        if (Double.valueOf(waveSize) < 0) {
+        if (Double.parseDouble(waveSize) < 0) {
             throw new IllegalArgumentException("Wave size must be greater than or equal to zero.");
         }
     }

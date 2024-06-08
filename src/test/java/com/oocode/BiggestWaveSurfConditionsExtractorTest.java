@@ -2,6 +2,7 @@ package com.oocode;
 
 import com.oocode.fakes.FakeWaveData;
 import com.oocode.utils.SurfConditionsHelper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -13,7 +14,6 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 public class BiggestWaveSurfConditionsExtractorTest {
@@ -125,7 +125,7 @@ public class BiggestWaveSurfConditionsExtractorTest {
                         "Caloundra",
                         0,
                         0,
-                        LocalDateTime.of(2024, Month.APRIL, 20, 1, 00),
+                        LocalDateTime.of(2024, Month.APRIL, 20, 1, 0),
                         "0.624"),
                 expectedSurfConditions
         );
@@ -144,6 +144,6 @@ public class BiggestWaveSurfConditionsExtractorTest {
         LocalDate today = LocalDate.of(2024, Month.APRIL, 20);
 
         RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> BiggestWaveSurfConditionsExtractor.extractSurfConditions(waveData, today));
-        assertEquals("No surf conditions found for date: 2024-04-20", exception.getMessage());
+        Assertions.assertEquals("No surf conditions found for date: 2024-04-20", exception.getMessage());
     }
 }

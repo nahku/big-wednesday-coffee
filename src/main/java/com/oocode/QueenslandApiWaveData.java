@@ -28,7 +28,7 @@ public class QueenslandApiWaveData implements WaveData {
                 throw new IllegalArgumentException("Invalid CSV data: Expected at least 8 columns in the input.");
             }
 
-            surfConditions = waveDataRows.stream().map(row -> createSurfConditionsFromDataRow(row)).toList();
+            surfConditions = waveDataRows.stream().map(QueenslandApiWaveData::createSurfConditionsFromDataRow).toList();
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to extract wave information from input.", e);

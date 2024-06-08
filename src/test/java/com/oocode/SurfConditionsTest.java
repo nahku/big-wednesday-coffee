@@ -1,6 +1,7 @@
 package com.oocode;
 
 import com.oocode.utils.SurfConditionsHelper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class SurfConditionsTest {
                         "-3.000"
                 )
         );
-        assertEquals("Wave size must be greater than or equal to zero.", exception.getMessage());
+        Assertions.assertEquals("Wave size must be greater than or equal to zero.", exception.getMessage());
     }
 
     @Test
@@ -40,7 +41,7 @@ public class SurfConditionsTest {
                         "-0.001"
                 )
         );
-        assertEquals("Wave size must be greater than or equal to zero.", exception.getMessage());
+        Assertions.assertEquals("Wave size must be greater than or equal to zero.", exception.getMessage());
     }
 
     @Test
@@ -52,7 +53,7 @@ public class SurfConditionsTest {
                 LocalDateTime.of(2024, Month.MAY, 4, 0, 0),
                 "2.000"
         );
-        assertEquals("Saturday", surfConditions.getDayOfWeek());
+        Assertions.assertEquals("Saturday", surfConditions.getDayOfWeek());
     }
 
 
@@ -65,7 +66,7 @@ public class SurfConditionsTest {
                 LocalDateTime.of(2024, Month.MAY, 2, 0, 0),
                 "2.000"
         );
-        assertEquals("Thursday", surfConditions.getDayOfWeek());
+        Assertions.assertEquals("Thursday", surfConditions.getDayOfWeek());
     }
 
     @Test
@@ -78,7 +79,7 @@ public class SurfConditionsTest {
                 dateTime,
                 "2.000"
         );
-        assertEquals(surfConditions.getDate(), dateTime.toLocalDate());
+        Assertions.assertEquals(surfConditions.getDate(), dateTime.toLocalDate());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class SurfConditionsTest {
                 dateTime,
                 "2.000"
         );
-        assertEquals(surfConditions.getDate(), dateTime.toLocalDate());
+        Assertions.assertEquals(surfConditions.getDate(), dateTime.toLocalDate());
     }
 
     @Test
@@ -104,7 +105,7 @@ public class SurfConditionsTest {
                 dateTime,
                 "5.000"
         );
-        assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(5));
+        Assertions.assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(5));
     }
 
     @Test
@@ -117,7 +118,7 @@ public class SurfConditionsTest {
                 dateTime,
                 "0.001"
         );
-        assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(0.001));
+        Assertions.assertEquals(surfConditions.getWaveSizeAsDouble(), Double.valueOf(0.001));
     }
 
     @Test
@@ -128,7 +129,7 @@ public class SurfConditionsTest {
                 LocalDateTime.of(2024, Month.MAY, 2, 0, 0),
                 "2.000"
         );
-        assertEquals(surfConditions.location(), expectedLocation);
+        Assertions.assertEquals(surfConditions.location(), expectedLocation);
     }
 
     @Test
@@ -139,7 +140,7 @@ public class SurfConditionsTest {
                 LocalDateTime.of(2024, Month.MAY, 10, 0, 0),
                 "5.000"
         );
-        assertEquals(surfConditions.location(), expectedLocation);
+        Assertions.assertEquals(surfConditions.location(), expectedLocation);
     }
 
 }

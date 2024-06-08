@@ -2,6 +2,7 @@ package com.oocode;
 
 import com.oocode.utils.FileHandlingHelper;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertTrue;
 
 public class SystemTest {
 
@@ -24,7 +23,7 @@ public class SystemTest {
         String output = Files.readString(Paths.get("index.html"), StandardCharsets.UTF_8);
 
         Matcher matcher = outputPattern.matcher(output);
-        assertTrue("Output does not match expected format.", matcher.matches());
+        Assertions.assertTrue(matcher.matches(), "Output does not match expected format.");
 
     }
 

@@ -3,6 +3,7 @@ package com.oocode;
 import com.oocode.fakes.FakeQueenslandApiServer;
 import com.oocode.utils.FileHandlingHelper;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -15,7 +16,6 @@ import java.time.Month;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 public class E2eTest {
@@ -171,21 +171,21 @@ public class E2eTest {
     public void throwsExceptionOnInvalidInputTooFew() {
         server.startLocalServerPretendingToBeQueenslandApi("");
         RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://localhost:8123"}));
-        assertEquals("Either provide url and current date or no arguments.", exception.getMessage());
+        Assertions.assertEquals("Either provide url and current date or no arguments.", exception.getMessage());
     }
 
     @Test
     public void throwsExceptionOnInvalidInputTooManyArguments() {
         server.startLocalServerPretendingToBeQueenslandApi("");
         RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://localhost:8123", "input 2", "input 3"}));
-        assertEquals("Either provide url and current date or no arguments.", exception.getMessage());
+        Assertions.assertEquals("Either provide url and current date or no arguments.", exception.getMessage());
     }
 
     @Test
     public void throwsExceptionOnInvalidInputInvalidDate() {
         server.startLocalServerPretendingToBeQueenslandApi("");
         RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://localhost:8123", "This should be a date."}));
-        assertEquals("Provided date could not be parsed.", exception.getMessage());
+        Assertions.assertEquals("Provided date could not be parsed.", exception.getMessage());
     }
 
     @Test
@@ -194,21 +194,21 @@ public class E2eTest {
         server.startLocalServerPretendingToBeQueenslandApi("""
                 Wave Data provided @ 02:15hrs on 28-04-2024
                 Site, SiteNumber, Seconds, DateTime, Latitude, Longitude, Hsig, Hmax, Tp, Tz, SST, Direction, Current Speed, Current Direction
-                Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90 
+                Location D,54,1713564000,2024-04-20T00:00:00,-26.84552,153.15474,0.9,12.200,10.530,4.040,24.70,75.90,-99.90,-99.90
                 """.trim());
 
         String url = "http://localhost:8123";
         LocalDate date = LocalDate.of(2025, Month.APRIL, 24);
 
         RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{url, date.toString()}));
-        assertEquals("No surf conditions found for date: 2025-04-24", exception.getMessage());
+        Assertions.assertEquals("No surf conditions found for date: 2025-04-24", exception.getMessage());
     }
 
     @Test
     public void throwsExceptionOnInvalidInputInvalidUrl() {
         server.startLocalServerPretendingToBeQueenslandApi("");
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> Main.main(new String[]{"http://This should be a url.", "2024-05-05"}));
-        assertEquals("Invalid URL host: \"This should be a url.\"", exception.getMessage());
+        Assertions.assertEquals("Invalid URL host: \"This should be a url.\"", exception.getMessage());
     }
 
     @BeforeEach

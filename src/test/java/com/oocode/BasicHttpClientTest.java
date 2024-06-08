@@ -1,13 +1,13 @@
 package com.oocode;
 
 import com.oocode.fakes.FakeQueenslandApiServer;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 public class BasicHttpClientTest {
@@ -53,7 +53,7 @@ public class BasicHttpClientTest {
         BasicHttpClient client = new BasicHttpClient();
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> client.readUrl(imaginaryUrl));
-        assertEquals("Reading url failed: " + imaginaryUrl, exception.getMessage());
+        Assertions.assertEquals("Reading url failed: " + imaginaryUrl, exception.getMessage());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class BasicHttpClientTest {
         BasicHttpClient client = new BasicHttpClient();
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> client.readUrl("http://localhost:8123"));
-        assertEquals("Reading url failed: http://localhost:8123. Error code: 500", exception.getMessage());
+        Assertions.assertEquals("Reading url failed: http://localhost:8123. Error code: 500", exception.getMessage());
 
     }
 

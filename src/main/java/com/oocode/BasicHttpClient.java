@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class BasicHttpClient implements HttpClient {
 
-    private OkHttpClient okHttpClient;
+    private final OkHttpClient okHttpClient;
 
     public BasicHttpClient() {
         okHttpClient = new OkHttpClient();
@@ -18,7 +18,7 @@ public class BasicHttpClient implements HttpClient {
     public String readUrl(String url) {
         Request request = new Request.Builder().url(url).build();
         try (Response response = okHttpClient.newCall(request).execute()) {
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && response.body() != null) {
                 ResponseBody rb = response.body();
                 return rb.string();
             } else {
